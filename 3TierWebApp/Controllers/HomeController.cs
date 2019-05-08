@@ -12,7 +12,8 @@ namespace _3TierWebApp.Controllers
 	{
 		public IActionResult Index()
 		{
-			return View();
+			IndexModel _model = new IndexModel() { HelloMessage = "Hi Igor" };
+			return View(_model);
 		}
 
 		public IActionResult About()
