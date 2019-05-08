@@ -4,7 +4,9 @@ using System.Text;
 
 namespace DAL.Entities
 {
-	class Directory
+	public class Directory : Page
 	{
+		public List<Material> Materials { get; set; }
+
 	}
 }
