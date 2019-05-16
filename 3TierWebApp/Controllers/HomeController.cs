@@ -5,15 +5,24 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using _3TierWebApp.Models;
+using DAL;
+using DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace _3TierWebApp.Controllers
 {
 	public class HomeController : Controller
 	{
+		private EFDBContext _context;
+		public HomeController(EFDBContext context)
+		{
+			 _context = context;
+		}
 		public IActionResult Index()
 		{
 			IndexModel _model = new IndexModel() { HelloMessage = "Hi Igor" };
-			return View(_model);
+			List<Directory> _dirs = _context.Directory.Include(x=>x.Materials).ToList();
+			return View(_dirs);
 		}
 
 		public IActionResult About()

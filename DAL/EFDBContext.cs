@@ -22,7 +22,7 @@ namespace DAL
 			public EFDBContext CreateDbContext(string[] args)
 			{
 				var optionsBuilder = new DbContextOptionsBuilder<EFDBContext>();
-				optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=WebAppTierThreeDb;Trusted_Connection=True;MultipleActiveResultSets=true", b => b.MigrationsAssembly("DAL"));
+				optionsBuilder.UseSqlServer("Server=DESKTOP-MFSAQ2U;Database=WebAppTierDb;Trusted_Connection=True;MultipleActiveResultSets=true", b => b.MigrationsAssembly("DAL"));
 
 				return new EFDBContext(optionsBuilder.Options);
 			}
