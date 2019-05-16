@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BLL;
+using BLL.Implementations;
+using BLL.Interfaces;
 using DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +31,10 @@ namespace _3TierWebApp
 		{
 			var connection = Configuration.GetConnectionString("DefaultConnection");
 			services.AddDbContext<EFDBContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("DAL")));
+			services.AddTransient<IDirectorysRepository, EFDirectorysRepository>();
+			services.AddTransient<IMaterialsRepository, EFMaterialsRepository>();
+			services.AddScoped<DataManager>();
+
 			services.Configure<CookiePolicyOptions>(options =>
 			{
 				// This lambda determines whether user consent for non-essential cookies is needed for a given request.

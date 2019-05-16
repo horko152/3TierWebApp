@@ -8,20 +8,28 @@ using _3TierWebApp.Models;
 using DAL;
 using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
+using BLL.Interfaces;
+using BLL;
 
 namespace _3TierWebApp.Controllers
 {
 	public class HomeController : Controller
 	{
 		private EFDBContext _context;
-		public HomeController(EFDBContext context)
+		private IDirectorysRepository _dirRep;
+		private DataManager _datamanager;
+		public HomeController(EFDBContext context, IDirectorysRepository dirRep, DataManager datamanager)
 		{
 			 _context = context;
+			_dirRep = dirRep;
+			_datamanager = datamanager;
 		}
 		public IActionResult Index()
 		{
 			IndexModel _model = new IndexModel() { HelloMessage = "Hi Igor" };
-			List<Directory> _dirs = _context.Directory.Include(x=>x.Materials).ToList();
+			//List<Directory> _dirs = _context.Directory.Include(x=>x.Materials).ToList();
+			//List<Directory> _dirs = _dirRep.GetAllDirectorys().ToList();
+			List<Directory> _dirs = _datamanager.Directorys.GetAllDirectorys(true).ToList();
 			return View(_dirs);
 		}
 
