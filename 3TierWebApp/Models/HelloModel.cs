@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace _3TierWebApp.Models
 {
-    public class IndexModel
-	{
-		public string HelloMessage { get; set; }
-	}
+    public class HelloModel
+{
+	public string HelloMessage { get; set; }
+}
 }

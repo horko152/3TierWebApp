@@ -10,26 +10,33 @@ using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using BLL.Interfaces;
 using BLL;
+using PresentationLayer.Models;
+using PresentationLayer;
 
 namespace _3TierWebApp.Controllers
 {
 	public class HomeController : Controller
 	{
-		private EFDBContext _context;
-		private IDirectorysRepository _dirRep;
+		//private EFDBContext _context;
+		//private IDirectorysRepository _dirRep;
 		private DataManager _datamanager;
-		public HomeController(EFDBContext context, IDirectorysRepository dirRep, DataManager datamanager)
+		private ServicesManager _servicesmanager;
+		public HomeController(/*EFDBContext context, IDirectorysRepository dirRep, */DataManager dataManager)
 		{
-			 _context = context;
-			_dirRep = dirRep;
-			_datamanager = datamanager;
+			//_context = context;
+			//dirRep = _dirRep;
+			_datamanager = dataManager;
+			_servicesmanager = new ServicesManager(_datamanager);
 		}
+
 		public IActionResult Index()
 		{
-			IndexModel _model = new IndexModel() { HelloMessage = "Hi Igor" };
+			HelloModel _model = new HelloModel() { HelloMessage = "Hi Igor!" };
 			//List<Directory> _dirs = _context.Directory.Include(x=>x.Materials).ToList();
 			//List<Directory> _dirs = _dirRep.GetAllDirectorys().ToList();
-			List<Directory> _dirs = _datamanager.Directorys.GetAllDirectorys(true).ToList();
+			//List<Directory> _dirs = _datamanager.Directorys.GetAllDirectorys(true).ToList();
+			List<DirectoryViewModel> _dirs = _servicesmanager.Directorys.GetDirectoryesList();
+
 			return View(_dirs);
 		}
 
@@ -47,12 +54,6 @@ namespace _3TierWebApp.Controllers
 			return View();
 		}
 
-		public IActionResult Privacy()
-		{
-			return View();
-		}
-
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
 		{
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

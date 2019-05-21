@@ -1,29 +1,41 @@
-﻿@*@model IndexModel*@
+﻿@using PresentationLayer.Models;
+@using DAL.Enums;
 
-@model List<DAL.Entities.Directory>
+@model List<DirectoryViewModel>
 @{
-    ViewData["Title"] = "Home Page";
+	ViewData["Title"] = "Home Page";
 }
 
 <div class="row">
 	<div class="col-md-12">
-		@*<h1>@Model.HelloMessage</h1>*@
 		<ul>
 			@foreach (var item in Model)
 			{
 				<li>
-					<h2>@item.Title</h2>
+					<h2>
+						<a asp-action="Index" asp-controller="Page" asp-route-pageId="@item.Directory.Id" asp-route-pageType="@PageEnums.PageType.Directory">@item.Directory.Title</a>
+						<a asp-action="PageEditor" asp-controller="Page" asp-route-pageId="@item.Directory.Id" asp-route-pageType="@PageEnums.PageType.Directory"><i style="font-size:12px;color:blue">Edit</i></a>
+					</h2>
 					<ul>
 						@if (item.Materials != null)
 						{
-							@foreach (var subItem in item.Materials)
+							foreach (var subItem in item.Materials)
 							{
-								<li>@subItem.Title</li>
+								<li>
+									<a asp-action="Index" asp-controller="Page" asp-route-pageId="@subItem.Material.Id" asp-route-pageType="@PageEnums.PageType.Material">@subItem.Material.Title</a>
+									<a asp-action="PageEditor" asp-controller="Page" asp-route-pageId="@subItem.Material.Id" asp-route-directoryid="@item.Directory.Id" asp-route-pageType="@PageEnums.PageType.Material"><i style="font-size:12px;color:blue">Edit</i></a>
+								</li>
 							}
+							<li>
+								<a asp-action="PageEditor" asp-controller="Page" asp-route-pageId="0" asp-route-directoryid="@item.Directory.Id" asp-route-pageType="@PageEnums.PageType.Material"><i style="font-size:12px;color:blue">Add Material</i></a>
+							</li>
 						}
 					</ul>
 				</li>
 			}
+			<li>
+				<a asp-action="PageEditor" asp-controller="Page" asp-route-pageId="0" asp-route-pageType="@PageEnums.PageType.Directory"><i style="font-size:16px;color:blue">Add Directory</i></a>
+			</li>
 		</ul>
-</div>
+	</div>
 </div>

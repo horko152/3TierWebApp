@@ -42,7 +42,7 @@ namespace BLL.Implementations
 			}
 		}
 
-		public void SaveDirectory(Material material)
+		public void SaveMaterial(Material material)
 		{
 			if (material.Id == 0)
 			{
